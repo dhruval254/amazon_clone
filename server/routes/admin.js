@@ -2,6 +2,7 @@ const express = require('express');
 const adminRouter = express.Router();
 const admin = require('../middlewares/admin');
 const { Product } = require("../models/product")
+const Order = require('../models/order');
 
 // Add product
 adminRouter.post('/admin/add-product', admin, async (req, res) => {
@@ -44,6 +45,15 @@ adminRouter.post('/admin/delete-product', admin, async (req, res) => {
     } catch (e) {
         res.status(500).json({ error: e.message });
     }
-})
+});
+
+adminRouter.get('/admin/get-orders',admin,async (req,res) => {
+    try{
+        const orders = await Order.find({});
+        res.json(orders);
+    }catch(e){
+        res.status(500).json({erroe:e.message});
+    }
+});
 
 module.exports = adminRouter;

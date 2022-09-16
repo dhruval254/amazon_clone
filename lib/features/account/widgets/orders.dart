@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../../common/widgets/loader.dart';
 import '../../../models/order.dart';
+import '../../order_details/screens/order_details.dart';
 
 class Orders extends StatefulWidget {
   const Orders({Key? key}) : super(key: key);
@@ -74,8 +75,17 @@ class _OrdersState extends State<Orders> {
                   scrollDirection: Axis.horizontal,
                   itemCount: orders!.length,
                   itemBuilder: (context, index) {
-                    return SingleProduct(
-                      image: orders![index].products[0].images[0],
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          OrderDetailsScreen.routeName,
+                          arguments: orders![index],
+                        );
+                      },
+                      child: SingleProduct(
+                        image: orders![index].products[0].images[0],
+                      ),
                     );
                   },
                 ),
